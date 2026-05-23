@@ -1,0 +1,7 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Thu May 21 15:33:38 UTC 2026
+@default-spring-releases-https\://repo.spring.io/release/.lastUpdated=1779377618392
+https\://repo.maven.apache.org/maven2/.lastUpdated=1779377618729
+https\://repo.spring.io/milestone/.error=
+https\://repo.spring.io/milestone/.lastUpdated=1779377618013
+https\://repo.spring.io/release/.error=Could not transfer artifact org.apache.logging\:logging-parent\:pom\:10.1.1 from/to spring-releases (https\://repo.spring.io/release)\: status code\: 401, reason phrase\:  (401)

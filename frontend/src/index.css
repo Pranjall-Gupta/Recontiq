@@ -1,0 +1,367 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    @apply antialiased;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    @apply text-sm text-slate-900 bg-white;
+  }
+}
+
+@layer utilities {
+  .font-sans {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+
+  .font-mono {
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+  }
+
+  /* Landing-specific text sizes */
+  .text-display {
+    font-size: clamp(48px, 7vw, 96px);
+    line-height: 1.0;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+  }
+
+  .text-display-md {
+    font-size: clamp(36px, 5vw, 72px);
+    line-height: 1.05;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+  }
+
+  .text-display-sm {
+    font-size: clamp(28px, 4vw, 52px);
+    line-height: 1.1;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+}
+
+/* Custom scrollbar for inner panels */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  @apply bg-slate-200 rounded-full;
+}
+
+/* Global thin scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-slate-200 rounded-full;
+}
+
+/* Skeleton shimmer */
+.skeleton-shimmer {
+  background: linear-gradient(90deg, #f1f5f9 0%, #e2e8f0 50%, #f1f5f9 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Float animation for hero widgets */
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-18px);
+  }
+}
+
+@keyframes float-slow {
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-slow {
+  animation: float-slow 8s ease-in-out infinite;
+}
+
+/* Pulse glow for fraud nodes */
+@keyframes glow-pulse {
+
+  0%,
+  100% {
+    box-shadow: 0 0 10px 2px rgba(239, 68, 68, 0.4);
+  }
+
+  50% {
+    box-shadow: 0 0 25px 8px rgba(239, 68, 68, 0.7);
+  }
+}
+
+.animate-glow-pulse {
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+
+/* Fade in from bottom */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.7s ease-out forwards;
+}
+
+.animate-fade-up-delay-1 {
+  animation: fade-up 0.7s ease-out 0.15s forwards;
+  opacity: 0;
+}
+
+.animate-fade-up-delay-2 {
+  animation: fade-up 0.7s ease-out 0.3s forwards;
+  opacity: 0;
+}
+
+.animate-fade-up-delay-3 {
+  animation: fade-up 0.7s ease-out 0.45s forwards;
+  opacity: 0;
+}
+
+/* Blue and White Theme Overrides */
+.landing-corporate-theme {
+  background-color: #ffffff;
+  color: #0f172a;
+}
+
+/* Hero sky background */
+.hero-waves {
+  background-color: #e8f2ff;
+  background:
+    linear-gradient(to bottom, transparent 75%, white 100%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.45) 0%, rgba(0, 0, 0, 0.15) 45%, transparent 100%),
+    url('/hero_sky_high_quality.png') center / cover no-repeat;
+}
+
+.preview-photo {
+  background:
+    linear-gradient(180deg, rgb(15 23 42 / 0.02) 0%, rgb(15 23 42 / 0.25) 100%),
+    url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1400&q=80') center / cover;
+}
+
+.why-photo {
+  background:
+    linear-gradient(180deg, rgb(15 23 42 / 0.05) 0%, rgb(15 23 42 / 0.35) 100%),
+    url('https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=900&q=80') center / cover;
+}
+
+.insight-1 {
+  background: url('https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=600&q=80') center / cover;
+}
+
+.insight-2 {
+  background: url('https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=600&q=80') center / cover;
+}
+
+.insight-3 {
+  background: url('https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&w=600&q=80') center / cover;
+}
+
+.bento-tile {
+  @apply rounded-3xl bg-gradient-to-br from-brand-50 to-brand-100 p-6;
+}
+
+.card-cream {
+  @apply rounded-3xl;
+  background-color: #f3f0e8;
+}
+
+/* Revolut Pro Aesthetics */
+.bento-tile,
+.card-cream,
+section .rounded-3xl,
+section .rounded-2xl {
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.bento-tile:hover,
+.card-cream:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.08), 0 10px 20px -5px rgba(0, 0, 0, 0.04);
+  border-color: rgba(59, 130, 246, 0.2);
+}
+
+img {
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.overflow-hidden:hover>img {
+  transform: scale(1.03);
+}
+
+/* ==========================================
+   ⚖️ CGST Section 16(2)(c) Legal Notice Print Stylesheet
+   ========================================== */
+@media print {
+  /* Suppress browser native margins/headers/footers */
+  @page {
+    size: A4 portrait;
+    margin: 1.6cm 1.6cm 1.6cm 1.6cm;
+  }
+
+  /* Reset body and viewport properties */
+  body, html {
+    background: white !important;
+    color: black !important;
+    overflow: visible !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    height: auto !important;
+  }
+
+  /* Hide absolutely everything inside the body by default */
+  body * {
+    visibility: hidden !important;
+  }
+
+  /* Explicitly unhide only the printable notice container and its descendants */
+  .printable-legal-notice,
+  .printable-legal-notice * {
+    visibility: visible !important;
+  }
+
+  /* Force parent modal containers to be static blocks to bypass clipping/scrolling */
+  .fixed.inset-0.z-50,
+  [role="dialog"] {
+    position: static !important;
+    display: block !important;
+    max-height: none !important;
+    height: auto !important;
+    overflow: visible !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+  }
+
+  /* Position the printable notice absolutely at the top-left of the physical page */
+  .printable-legal-notice {
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    min-width: 100% !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: white !important;
+    color: black !important;
+    box-shadow: none !important;
+    border: none !important;
+    overflow: visible !important;
+    display: block !important;
+  }
+
+  /* Override columns inside the printable notice using standard floats for maximum layout engine compatibility */
+  .printable-legal-notice .grid-cols-2 {
+    display: block !important;
+    clear: both !important;
+    width: 100% !important;
+  }
+  
+  .printable-legal-notice .grid-cols-2 > :first-child {
+    float: left !important;
+    width: 48% !important;
+    text-align: left !important;
+  }
+  
+  .printable-legal-notice .grid-cols-2 > :last-child {
+    float: right !important;
+    width: 48% !important;
+    text-align: right !important;
+  }
+  
+  .printable-legal-notice .grid-cols-2::after {
+    content: "" !important;
+    display: table !important;
+    clear: both !important;
+  }
+
+  /* Ensure text remains high-contrast black on white paper */
+  .printable-legal-notice h1,
+  .printable-legal-notice h2,
+  .printable-legal-notice h3,
+  .printable-legal-notice h4,
+  .printable-legal-notice p,
+  .printable-legal-notice span,
+  .printable-legal-notice td,
+  .printable-legal-notice th {
+    color: #000000 !important;
+    background: transparent !important;
+    font-family: 'Inter', 'Segoe UI', -apple-system, sans-serif !important;
+  }
+
+  /* Ensure borders print as elegant thin black lines */
+  .printable-legal-notice border,
+  .printable-legal-notice .border,
+  .printable-legal-notice .border-b,
+  .printable-legal-notice .border-t,
+  .printable-legal-notice .border-l,
+  .printable-legal-notice .border-r {
+    border-color: #000000 !important;
+  }
+
+  /* Ensure webkit print colors are preserved exactly */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}

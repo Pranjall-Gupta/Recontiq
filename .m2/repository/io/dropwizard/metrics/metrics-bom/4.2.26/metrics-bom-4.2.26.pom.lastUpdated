@@ -1,0 +1,7 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Thu May 21 15:33:21 UTC 2026
+@default-spring-releases-https\://repo.spring.io/release/.lastUpdated=1779377600569
+https\://repo.maven.apache.org/maven2/.lastUpdated=1779377600991
+https\://repo.spring.io/milestone/.error=
+https\://repo.spring.io/milestone/.lastUpdated=1779377600219
+https\://repo.spring.io/release/.error=Could not transfer artifact io.dropwizard.metrics\:metrics-bom\:pom\:4.2.26 from/to spring-releases (https\://repo.spring.io/release)\: status code\: 401, reason phrase\:  (401)

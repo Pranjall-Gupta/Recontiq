@@ -1,0 +1,136 @@
+
+# ─────────────────────────────────────────────────────────────────────────────
+# GST Reconciliation Platform — Docker Compose
+# Services: PostgreSQL 16 + pgvector | Redis 7 | Ollama (CPU)
+# ─────────────────────────────────────────────────────────────────────────────
+
+networks:
+  gst_net:
+    driver: bridge
+
+volumes:
+  pg_data:
+  redis_data:
+  ollama_data:
+
+services:
+
+  # ─── PostgreSQL 16 with pgvector extension ───────────────────────────────
+  postgres:
+    image: pgvector/pgvector:pg16          # official pgvector image, free
+    container_name: gst_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: gst_recon
+      POSTGRES_USER: gst_user
+      POSTGRES_PASSWORD: gst_pass
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+      - ./infra/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U gst_user -d gst_recon"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - gst_net
+
+  # ─── Redis 7 (session cache + rate limiting) ─────────────────────────────
+  redis:
+    image: redis:7.2-alpine
+    container_name: gst_redis
+    restart: unless-stopped
+    command: >
+      redis-server
+      --requirepass redis_pass
+      --maxmemory 256mb
+      --maxmemory-policy allkeys-lru
+      --save 60 1
+      --loglevel warning
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "redis_pass", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - gst_net
+
+  # ─── Ollama (local LLM server — completely free) ─────────────────────────
+  # By default runs on CPU; uncomment `deploy` block for GPU support.
+  ollama:
+    image: ollama/ollama:latest
+    container_name: gst_ollama
+    restart: unless-stopped
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    environment:
+      - OLLAMA_HOST=0.0.0.0
+    # ── GPU support (NVIDIA) — uncomment if available ──
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: 1
+    #           capabilities: [gpu]
+    healthcheck:
+      test: ["CMD", "ollama", "list"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+    networks:
+      - gst_net
+
+  # ─── Ollama model bootstrapper (runs once, then exits) ───────────────────
+  ollama-pull:
+    image: curlimages/curl:latest
+    container_name: gst_ollama_init
+    depends_on:
+      ollama:
+        condition: service_healthy
+    # Pull nomic-embed-text (embeddings) + llama3 (chat/analysis)
+    entrypoint: >
+      sh -c "
+        curl -s -X POST http://ollama:11434/api/pull -d '{\"name\":\"nomic-embed-text\"}' &&
+        curl -s -X POST http://ollama:11434/api/pull -d '{\"name\":\"llama3.2:1b\"}'
+      "
+    networks:
+      - gst_net
+    restart: "no"
+
+  # ─── Spring Boot Application ──────────────────────────────────────────────
+  app:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: gst_app
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      ollama:
+        condition: service_healthy
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/gst_recon
+      SPRING_DATASOURCE_USERNAME: gst_user
+      SPRING_DATASOURCE_PASSWORD: gst_pass
+      SPRING_DATA_REDIS_HOST: redis
+      SPRING_DATA_REDIS_PORT: 6379
+      SPRING_DATA_REDIS_PASSWORD: redis_pass
+      SPRING_AI_OLLAMA_BASE_URL: http://ollama:11434
+      SPRING_PROFILES_ACTIVE: docker
+    networks:
+      - gst_net

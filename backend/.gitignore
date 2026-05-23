@@ -1,0 +1,47 @@
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.next
+pom.xml.versionsBackup
+pom.xml.restore
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/.maven-wrapper.properties
+# Compiled class file
+*.class
+# Log files
+*.log
+# Package Files
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+# Eclipse
+.metadata/
+.classpath
+.project
+.settings/
+.springBeans
+.factorypath
+# NetBeans
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbproject/spring-beans.xml
+# Operating System Files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store
