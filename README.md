@@ -1,83 +1,189 @@
 <div align="center">
-  
-  <h1>GSTMatch</h1>
-  <p><strong>AI-Powered GST Invoice Reconciliation & GSTR-2B Compliance Platform</strong></p>
+
+  <h1>✨ RecontiQ ✨</h1>
+  <p><strong>Next-Gen AI-Powered GST Invoice Reconciliation & GSTR-2B Compliance Platform</strong></p>
 
   <p>
-    <a href="#features">Features</a> •
-    <a href="#tech-stack">Tech Stack</a> •
-    <a href="#architecture">Architecture</a> •
-    <a href="#installation">Installation</a> •
-    <a href="#api-documentation">API Docs</a>
+    <a href="#-overview">Overview</a> •
+    <a href="#-core-features">Features</a> •
+    <a href="#-tech-stack--architecture">Tech Stack & Architecture</a> •
+    <a href="#-repository-structure">Repository Structure</a> •
+    <a href="#-installation--local-setup">Installation & Setup</a> •
+    <a href="#-configuration--security">Configuration & Security</a> •
+    <a href="#-api-documentation">API Docs</a>
   </p>
+
+  <img src="https://img.shields.io/badge/Spring%20Boot-3.3.5-brightgreen?style=for-the-badge&logo=springboot" alt="Spring Boot Badge"/>
+  <img src="https://img.shields.io/badge/React-19-blue?style=for-the-badge&logo=react" alt="React Badge"/>
+  <img src="https://img.shields.io/badge/PostgreSQL-16%20%2B%20PGVector-blue?style=for-the-badge&logo=postgresql" alt="PostgreSQL PGVector Badge"/>
+  <img src="https://img.shields.io/badge/Ollama-Local%20LLM-orange?style=for-the-badge&logo=ollama" alt="Ollama Badge"/>
+  <img src="https://img.shields.io/badge/Redis-Cache-red?style=for-the-badge&logo=redis" alt="Redis Badge"/>
 </div>
 
 ---
 
 ## 📖 Overview
 
-**GSTMatch** is an enterprise-grade tax reconciliation platform designed to scale automatically with your business. By harnessing the power of advanced AI models (via Ollama) and vector embeddings (PGVector), GSTMatch drastically improves the accuracy of detecting invoice mismatches, maximizing ITC (Input Tax Credit) recovery, and ensuring seamless API sync with the GSTR-2B ecosystem.
+**RecontiQ** is an enterprise-grade tax reconciliation platform engineered to scale automatically with your business. By harnessing the power of advanced AI models (via local Ollama inference) and vector embeddings (PGVector), RecontiQ drastically improves the precision of detecting invoice discrepancies, maximizing ITC (Input Tax Credit) recovery, and ensuring seamless compliance with the GSTR-2B ecosystem.
 
-Whether you are a startup dealing with minimal monthly statements or an enterprise evaluating millions of transactions, GSTMatch eliminates manual blind spots and intelligently routes risk alerts to finance teams.
+Whether you are a growing business dealing with hundreds of monthly statements or an enterprise evaluating millions of transactions, RecontiQ eliminates manual blind spots, streamlines compliance, and intelligently routes real-time risk alerts to your finance team.
+
+---
 
 ## ✨ Core Features
 
-- **🧠 Agentic AI Matching**: Intelligent fallback from exact matching to dynamic vector-similarity logic using Spring AI.
-- **🛡️ Dynamic Risk Scoring**: Built-in Machine Learning algorithms to profile vendor reliability and red-flag high-risk discrepancies automatically. 
-- **📈 ITC Optimization**: Smart tracking of tax credits with full dashboard analytics, keeping operational cash flows positive.
-- **⚡ High-Performance Caching**: Powered by Redis for instantaneous dashboard metrics and fast session loading.
-- **🔐 Enterprise Security**: JWT-based authentication and rigorously enforced CORS rules.
+- **🧠 Agentic AI Reconciliation**: Intelligent fallback matching logic utilizing Spring AI. It goes beyond simple string matching to perform high-dimensional semantic similarity lookups using PostgreSQL Vector embeddings.
+- **🛡️ Intelligent Risk Scoring**: Integrated Machine Learning algorithms that profile vendor reliability, track compliance history, and flag high-risk discrepancies automatically.
+- **📈 ITC Optimization Dashboard**: High-fidelity operational cash flow analysis that tracks eligible Input Tax Credit (ITC), highlights missing supplier uploads, and calculates potential tax savings.
+- **⚡ High-Performance Caching**: Redis-powered caching for instantaneous dashboard updates, blazingly fast session management, and ultra-low latency API lookups.
+- **🔐 Enterprise Security & Controls**: Secure token-based JWT authentication, granular role-based access control, and strictly enforced CORS rules.
 
 ---
 
-The platform is split into a massively scalable Spring Boot monolith and a state-of-the-art responsive React 19 rendering layer.
+## 🏗️ Tech Stack & Architecture
 
-## 📂 Repository Structure & IDE Guide
+RecontiQ is built using a modern, decoupled architecture consisting of a high-throughput **Spring Boot** backend monolith and an interactive, state-of-the-art **React 19** single-page application.
 
-To optimize the developer experience, the frontend and backend are completely isolated into independent subfolders:
+### The Stack
+* **Backend**: Java 21, Spring Boot 3.3.5, Spring AI, PostgreSQL with PGVector extension, Redis, Flyway migrations, and JJWT.
+* **Frontend**: React 19, Vite, TypeScript, Tailwind CSS v4, Framer Motion (for physics-based animations), and Lucide React.
+* **Deployment**: Docker & Docker Compose for containerized multi-service middleware orchestration.
 
-```text
-impact/                  <-- Root Repository Directory (Open in Terminal for Docker Compose)
-├── backend/             <-- Spring Boot Backend Project (Open in IntelliJ IDEA)
-│   ├── pom.xml
-│   ├── src/
-│   └── Dockerfile
-├── frontend/            <-- React Vite Frontend Project (Open in VS Code)
-│   ├── package.json
-│   └── src/
-├── infra/               <-- Database and Cache Configuration Files
-└── docker-compose.yml   <-- Multi-container configuration
+### System Architecture Diagram
+
+```mermaid
+graph LR
+    Client([Vite React 19 SPA]) -->|REST / JSON APIs| APIGateway(Spring Boot Controller)
+    APIGateway --> Services(Business Logic & AI Engine)
+    Services --> Cache[(Redis Cache)]
+    Services --> SQL[(PostgreSQL + Flyway)]
+    Services --> VectorDB[(PGVector Store)]
+    Services -.-> Ollama[Ollama Local LLM]
 ```
 
-### 💻 Local Development Workflow
+---
 
-1. **Backend Development (IntelliJ IDEA)**:
-   - Open **IntelliJ IDEA**.
-   - Select **Open** and choose the `d:\impact\backend` folder.
-   - IntelliJ will automatically detect it as a Maven project and import the dependencies.
+## 📂 Repository Structure
 
-2. **Frontend Development (VS Code)**:
-   - Open **VS Code**.
-   - Open the `d:\impact\frontend` folder.
-   - Open the VS Code integrated terminal and run `npm install` and `npm run dev` to start the frontend server.
+To optimize developer workflows, the frontend and backend projects are fully decoupled inside independent subdirectories:
 
-3. **Running Middleware / Docker (VS Code Root)**:
-   - Open the root folder `d:\impact` in VS Code.
-   - Run Docker Compose commands from the root directory terminal.
+```text
+impact/                       <-- Root Directory (Open in Terminal for Docker Compose)
+├── backend/                  <-- Spring Boot Backend Monolith (Open in IntelliJ IDEA)
+│   ├── pom.xml               <-- Maven Dependencies
+│   ├── src/                  <-- Application source code & Flyway migrations
+│   └── Dockerfile
+├── frontend/                 <-- React Vite Frontend Application (Open in VS Code)
+│   ├── package.json          <-- Node.js Dependencies
+│   ├── vite.config.ts        <-- Vite configuration
+│   └── src/                  <-- Component library & dashboard views
+├── infra/                    <-- Local Middleware Configurations (PostgreSQL, Redis config)
+└── docker-compose.yml        <-- Multi-container docker Orchestration script
+```
 
 ---
 
-## 📚 Documentation Directory
+## 🚀 Installation & Local Setup
 
-To keep this readme crisp, we've organized in-depth details into dedicated documentation files:
+Get your local environment up and running in minutes by following these step-by-step setup guides.
 
-- 🏗️ **[System Architecture & Tech Stack](docs/ARCHITECTURE.md)**: Deep dive into our Spring AI, Postgres Vector workflows, and the Vite-frontend layout.
-- 🚀 **[Installation & Local Setup](docs/SETUP.md)**: Step-by-step terminal guides for spinning up Docker, Ollama models, and dev servers.
-- 🔗 **[API Reference](docs/API.md)**: Links to localized interactive Swagger documentation and OpenAPI specifications.
+### 1. Prerequisites
+Ensure you have the following installed:
+* **Java 21+ (JDK)** & **Maven 3.9+**
+* **Node.js (v18+)** & **NPM**
+* **Docker Desktop** (or Docker Daemon running)
+* **Ollama** (Local LLM environment)
+
+---
+
+### 2. Infrastructure Setup (Docker & Ollama)
+
+#### A. Spin up Middleware Services
+From the root repository directory (`d:\impact`), spin up PostgreSQL (with PGVector enabled) and Redis using Docker Compose:
+```bash
+docker-compose up -d
+```
+
+#### B. Configure Ollama & Pull Models
+Make sure your Ollama daemon is running, then pull the lightweight LLM and text-embedding models:
+```bash
+# Pull the LLM for agentic matching decisions
+ollama pull llama3.2:1b
+
+# Pull the vector embedding model
+ollama pull nomic-embed-text
+```
+
+---
+
+### 3. Backend Setup (Spring Boot)
+
+The core Spring Boot API operates on port `8080` by default.
+
+#### A. Navigate to backend directory:
+```bash
+cd backend
+```
+
+#### B. Compile and Run the Server:
+```bash
+mvn clean install
+mvn spring-boot:run
+```
+> [!NOTE]
+> Database schema migrations are managed automatically on startup by Flyway using the scripts located in `/src/main/resources/db/migration`.
+
+---
+
+### 4. Frontend Setup (React & Vite)
+
+The frontend runs on Vite's default dev server port (`5173` or `3000` depending on environment configuration).
+
+#### A. Navigate to the frontend directory:
+```bash
+cd ../frontend
+```
+
+#### B. Install Node packages:
+```bash
+npm install
+```
+
+#### C. Start the Vite Development Server:
+```bash
+npm run dev
+```
+
+Now open [http://localhost:5173](http://localhost:5173) in your web browser to access the beautiful RecontiQ dashboard!
+
+---
+
+## 🔧 Configuration & Security
+
+> [!WARNING]
+> **Production Security Best Practice**: Never hardcode production secrets, passwords, or cryptographic keys in `application.yml`, `.env`, or the `README.md` file. Always use environment injection, secure credential stores, or ignored local configuration files.
+
+To override configurations in staging or production environments, you can define these environment variables securely. Notice that placeholders `<...>` should be replaced with your actual secret values in your environment variables runner, and **never committed to your version control**:
+
+| Environment Variable | Local Dev Fallback (Safe) | Description / Purpose |
+|---|---|---|
+| `SPRING_DATASOURCE_URL` | `jdbc:postgresql://localhost:5432/gst_recon` | Endpoint for the PostgreSQL target instance |
+| `SPRING_DATASOURCE_USERNAME` | `<db_username>` | Secure database user with read/write access |
+| `SPRING_DATASOURCE_PASSWORD` | `<db_password>` | Password matching the secure database user |
+| `SPRING_AI_OLLAMA_BASE_URL` | `http://localhost:11434` | Point to your containerized or local Ollama Daemon |
+| `APP_JWT_SECRET` | `<your_secure_256bit_hex_secret>` | Secure high-entropy signature key for signing JWT tokens |
+
+---
+
+## 📚 API Documentation
+
+When the backend server is running locally, interactive API documentation is fully exposed for quick integration and endpoint exploration:
+
+* **Interactive Swagger UI**: [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
+* **Raw OpenAPI JSON Spec**: [http://localhost:8080/api-docs](http://localhost:8080/api-docs)
 
 ---
 
 <div align="center">
-  <sub>Built with precision and scalability by the GSTMatch Organization.</sub>
+  <sub>Built with precision and scalability by the RecontiQ Organization.</sub>
 </div>
-
