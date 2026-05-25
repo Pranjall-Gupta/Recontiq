@@ -32,11 +32,11 @@ Whether you are a growing business dealing with hundreds of monthly statements o
 
 ##  Core Features
 
-- ** Agentic AI Reconciliation**: Intelligent fallback matching logic utilizing Spring AI. It goes beyond simple string matching to perform high-dimensional semantic similarity lookups using PostgreSQL Vector embeddings.
-- ** Intelligent Risk Scoring**: Integrated Machine Learning algorithms that profile vendor reliability, track compliance history, and flag high-risk discrepancies automatically.
-- ** ITC Optimization Dashboard**: High-fidelity operational cash flow analysis that tracks eligible Input Tax Credit (ITC), highlights missing supplier uploads, and calculates potential tax savings.
-- ** High-Performance Caching**: Redis-powered caching for instantaneous dashboard updates, blazingly fast session management, and ultra-low latency API lookups.
-- ** Enterprise Security & Controls**: Secure token-based JWT authentication, granular role-based access control, and strictly enforced CORS rules.
+- **Agentic AI Reconciliation**: Intelligent fallback matching logic utilizing Spring AI. It goes beyond simple string matching to perform high-dimensional semantic similarity lookups using PostgreSQL Vector embeddings.
+- **Intelligent Risk Scoring**: Integrated Machine Learning algorithms that profile vendor reliability, track compliance history, and flag high-risk discrepancies automatically.
+- **ITC Optimization Dashboard**: High-fidelity operational cash flow analysis that tracks eligible Input Tax Credit (ITC), highlights missing supplier uploads, and calculates potential tax savings.
+- **High-Performance Caching**: Redis-powered caching for instantaneous dashboard updates, blazingly fast session management, and ultra-low latency API lookups.
+- **Enterprise Security & Controls**: Secure token-based JWT authentication, granular role-based access control, and strictly enforced CORS rules.
 
 ---
 
